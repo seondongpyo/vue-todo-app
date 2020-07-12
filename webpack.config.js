@@ -1,6 +1,7 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 require('@babel/polyfill');
 
 module.exports = {
@@ -41,6 +42,14 @@ module.exports = {
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'index.html')
+        }),
+        new CopyWebpackPlugin({
+            patterns: [ // patterns 속성에 넣어야 됨
+                {
+                    from: 'assets/',    // 배포용 결과물에 복사할 파일들의 위치
+                    to: ''  // '' : root 경로 (= dist/)
+                }
+            ]
         })
     ]
 }
