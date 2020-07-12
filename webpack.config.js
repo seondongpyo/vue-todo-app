@@ -53,5 +53,9 @@ module.exports = {
             ]
         }),
         new CleanWebpackPlugin()
-    ]
+    ],
+    devServer: {
+        open: true,    // webpack-dev-server 실행 시 브라우저를 바로 열지 말지를 결정
+        hot: true   // hot-module-replacement : 수정사항을 바로 반영할지를 결정
+    }
 }
