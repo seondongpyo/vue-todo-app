@@ -7,7 +7,10 @@ const { merge } = require('webpack-merge');
 require('@babel/polyfill');
 
 const config = {
-    // 중복되는 옵션들
+    // import 시 확장자 생략 가능
+    resolve: {
+        extensions: ['.vue', '.js']
+    },
     // 진입점 : 프로젝트 시작 시 가장 먼저 실행될 파일
     entry: {
         app: [

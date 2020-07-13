@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import App from './App.vue';
+import App from './App';
 
 // 최상위 컴포넌트
 new Vue({
