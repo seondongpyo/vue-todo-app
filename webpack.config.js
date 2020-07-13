@@ -36,14 +36,16 @@ const config = {
                 test: /\.css$/,
                 use: [  // 반드시 동작하는 순서대로 입력해야 됨
                     'vue-style-loader',
-                    'css-loader'
+                    'css-loader',
+                    'postcss-loader'
                 ]
             },
             {
                 test: /\.scss$/,
-                use: [
+                use: [  // 순서 주의!
                     'vue-style-loader',
                     'css-loader',
+                    'postcss-loader',
                     'sass-loader'
                 ]
             }
