@@ -53,6 +53,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.10.4",
+    "lodash": "^4.17.19",
+    "lowdb": "^1.0.0",
     "vue": "^2.6.11"
   }
 }
