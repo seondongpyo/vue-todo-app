@@ -10,6 +10,9 @@
 import lowdb from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
 
+// id용 임의의 문자열 생성
+import cryptoRandomString from 'crypto-random-string';
+
 import TodoCreator from './TodoCreator';
 import TodoItem from './TodoItem'
 
@@ -33,10 +36,24 @@ export default {
 
             // Local DB 초기화
             this.db
-                .defaults({
+                .defaults({ // lodash
                     todos: []   // Collection
                 })
                 .write();
+        },
+        createTodo (title) {
+            const newTodo = {
+                id: cryptoRandomString({ length: 10 }),
+                title: title,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                done: false
+            };
+
+            this.db
+                .get('todos')   // lodash
+                .push(newTodo)  // lodash
+                .write();   // lowdb
         }
     }
 }
