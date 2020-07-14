@@ -1,7 +1,7 @@
 <template>
     <div>
         <todo-item></todo-item>
-        <todo-creator></todo-creator>
+        <todo-creator @create-todo="createTodo"></todo-creator>
     </div>
 </template>
 
