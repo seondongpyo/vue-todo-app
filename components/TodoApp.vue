@@ -4,7 +4,12 @@
             v-for="todo in todos"
             :key="todo.id"
             :todo="todo"
+            @update-todo="updateTodo"
+            @delete-todo="deleteTodo"
         />
+
+        <hr>
+
         <todo-creator @create-todo="createTodo"></todo-creator>
     </div>
 </template>
@@ -67,6 +72,12 @@ export default {
                 .get('todos')   // lodash
                 .push(newTodo)  // lodash
                 .write();   // lowdb
+        },
+        updateTodo () {
+            console.log('Update Todo!');
+        },
+        deleteTodo () {
+            console.log('Delete  Todo!');
         }
     }
 }
