@@ -1,6 +1,10 @@
 <template>
     <div>
-        <todo-item></todo-item>
+        <todo-item
+            v-for="todo in todos"
+            :key="todo.id"
+            :todo="todo"
+        />
         <todo-creator @create-todo="createTodo"></todo-creator>
     </div>
 </template>
@@ -9,6 +13,7 @@
 // 로컬 스토리지
 import lowdb from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
+import _cloneDeep from 'lodash/cloneDeep';
 
 // id용 임의의 문자열 생성
 import cryptoRandomString from 'crypto-random-string';
@@ -23,7 +28,8 @@ export default {
     },
     data () {
         return {
-            db: null
+            db: null,
+            todos: []
         }
     },
     created () {
@@ -34,12 +40,19 @@ export default {
             const adapter = new LocalStorage('todo-app');   // 'todo-app'이라는 이름으로 어댑터를 생성
             this.db = lowdb(adapter);
 
-            // Local DB 초기화
-            this.db
-                .defaults({ // lodash
-                    todos: []   // Collection
-                })
-                .write();
+            const hasTodos = this.db.has('todos').value //lodash
+
+            if (hasTodos) {
+                this.todos = _cloneDeep(this.db.getState().todos);
+
+            } else {
+                // Local DB 초기화
+                this.db
+                    .defaults({ // lodash
+                        todos: []   // Collection
+                    })
+                    .write();
+            }
         },
         createTodo (title) {
             const newTodo = {
