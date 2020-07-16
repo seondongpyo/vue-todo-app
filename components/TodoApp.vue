@@ -19,6 +19,8 @@
 import lowdb from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
 import _cloneDeep from 'lodash/cloneDeep';
+import _find from 'lodash/find';
+import _assign from 'lodash/assign';
 
 // id용 임의의 문자열 생성
 import cryptoRandomString from 'crypto-random-string';
@@ -68,13 +70,25 @@ export default {
                 done: false
             };
 
+            // DB insert
             this.db
                 .get('todos')   // lodash
                 .push(newTodo)  // lodash
                 .write();   // lowdb
+
+            // Create Client
+            this.todos.push(newTodo);
         },
-        updateTodo () {
-            console.log('Update Todo!');
+        updateTodo (todo, value) {
+            this.db
+                .get('todos')
+                .find({ id: todo.id })
+                .assign(value)
+                .write();
+
+            const foundTodo = _find(this.todos, { id: todo.id });
+            _assign(foundTodo, value);
+
         },
         deleteTodo () {
             console.log('Delete  Todo!');

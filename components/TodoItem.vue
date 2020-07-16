@@ -97,7 +97,7 @@ export default {
             if (this.todo.title !== this.editedTitle) {
                 this.updateTodo({
                     title: this.editedTitle,
-                    updatedAt = new Date()
+                    updatedAt: new Date()
                 });
             }
 
