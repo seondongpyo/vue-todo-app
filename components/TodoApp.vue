@@ -27,7 +27,7 @@
                     v-model="allDone"
                     type="checkbox"
                 >
-                <button>
+                <button @click="clearCompleted">
                     완료된 항목 삭제
                 </button>
             </div>
@@ -60,6 +60,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import _find from 'lodash/find';
 import _assign from 'lodash/assign';
 import _findIndex from 'lodash/findIndex';
+import _forEachRight from 'lodash/forEachRight';
 
 // id용 임의의 문자열 생성
 import cryptoRandomString from 'crypto-random-string';
@@ -188,6 +189,36 @@ export default {
             //     todo.done = checked
             // });
             this.todos = _cloneDeep(newTodos);
+        },
+        clearCompleted () {
+            // 배열 요소를 앞에서부터 삭제할 경우 에러 발생 가능 (인덱스가 밀림)
+            // this.todos.forEach(todo => {
+            //     if (todo.done) {
+            //         this.deleteTodo(todo);
+            //     }
+            // });
+
+            // vanilla js
+            // this.todos
+            //     .reduce((list, todo, index) => {
+            //         if (todo.done) {
+            //             list.push(index);
+            //         }
+
+            //         return list;
+            //     }, [])
+            //     .reverse()
+            //     .forEach(index => {
+            //         this.deleteTodo(this.todos[index]);
+            //     });
+
+            // lodash
+            _forEachRight(this.todos, todo => {
+                if (todo.done) {
+                    this.deleteTodo(todo);
+                }
+            });
+
         }
     }
 }
