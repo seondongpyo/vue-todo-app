@@ -21,6 +21,16 @@
                     완료된 항목 ({{ completedCount }})
                 </button>
             </div>
+
+            <div class="actions">
+                <input 
+                    v-model="allDone"
+                    type="checkbox"
+                >
+                <button>
+                    완료된 항목 삭제
+                </button>
+            </div>
         </div>
 
         <div class="todo-app__list">
@@ -91,6 +101,14 @@ export default {
         },
         completedCount () {
             return this.total - this.activeCount;
+        },
+        allDone: {
+            get () {
+                return this.total === this.completedCount && this.total > 0;
+            },
+            set (checked) {
+                this.completeAll(checked);
+            }
         }
     },
     created () {
@@ -101,7 +119,7 @@ export default {
             const adapter = new LocalStorage('todo-app');   // 'todo-app'이라는 이름으로 어댑터를 생성
             this.db = lowdb(adapter);
 
-            const hasTodos = this.db.has('todos').value //lodash
+            const hasTodos = this.db.has('todos').value; //lodash
 
             if (hasTodos) {
                 this.todos = _cloneDeep(this.db.getState().todos);
@@ -155,6 +173,21 @@ export default {
         },
         changeFilter (filter) {
             this.filter = filter;
+        },
+        completeAll (checked) {
+            // DB 갱신
+            const newTodos = this.db
+                .get('todos')
+                .forEach(todo => {
+                    todo.done = checked;
+                })
+                .write();
+
+            // Local todos 갱신
+            // this.todos.forEach(todo => {
+            //     todo.done = checked
+            // });
+            this.todos = _cloneDeep(newTodos);
         }
     }
 }
