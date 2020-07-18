@@ -1,5 +1,8 @@
 <template>
     <div>
+        <button @click="createTodo">
+            <i class="material-icons">add</i>
+        </button>
         <input 
             :value="title"
             :placeholder="placeholder"
@@ -7,9 +10,6 @@
             @input="title = $event.target.value"
             @keypress.enter="createTodo"
         >
-        <button 
-            @click="createTodo"
-        >추가</button>
     </div>
 </template>
 
@@ -33,6 +33,10 @@ export default {
 
             this.$emit('create-todo', this.title);
             this.title = '';
+
+            this.$nextTick(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            });
         }
     }
 }
