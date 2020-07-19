@@ -4,25 +4,12 @@
             <h1>
                 Omnibus' Home page!
             </h1>
-            <h2 @click="toAbout">
+            <h2 @click="$router.push('/about')">
                 About
             </h2>
-            <h2 @click="toTodoApp">
+            <h2 @click="$router.push('/todos')">
                 Todo App
             </h2>
         </div>
     </section>
 </template>
-
-<script>
-export default {
-    methods: {
-        toAbout () {
-            this.$router.push('/about');
-        },
-        toTodoApp () {
-            this.$router.push('/todos');
-        }
-    }
-}
-</script>
