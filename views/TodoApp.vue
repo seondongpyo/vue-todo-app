@@ -90,8 +90,8 @@ import scrollTo from 'scroll-to';
 // id용 임의의 문자열 생성
 import cryptoRandomString from 'crypto-random-string';
 
-import TodoCreator from './TodoCreator';
-import TodoItem from './TodoItem'
+import TodoCreator from '~/components/TodoCreator';
+import TodoItem from '~/components/TodoItem'
 
 export default {
     components: {
@@ -260,5 +260,5 @@ export default {
 </script>
 
 <style lang="scss">
-    @import "../scss/style";
+    @import "scss/style";
 </style>

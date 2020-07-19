@@ -9,7 +9,11 @@ require('@babel/polyfill');
 const config = {
     // import 시 확장자 생략 가능
     resolve: {
-        extensions: ['.vue', '.js']
+        extensions: ['.vue', '.js'],
+        alias: {    // 절대경로 별칭 생성
+            '~': path.join(__dirname),
+            'scss': path.join(__dirname, './scss')
+        }
     },
     // 진입점 : 프로젝트 시작 시 가장 먼저 실행될 파일
     entry: {
