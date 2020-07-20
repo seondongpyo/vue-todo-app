@@ -27,6 +27,7 @@ const routes = [
         component: TodoApp,
         children: [
             {
+                name: 'todo-filter',
                 path: ':id'    // 전달 받을 파라미터를 설정
             }
         ]
