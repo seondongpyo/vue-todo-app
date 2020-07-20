@@ -2,24 +2,15 @@
     <div class="todo-app">
         <div class="todo-app__actions">
             <div class="filters">
-                <button 
-                    :class="{ active: filter == 'all'}"
-                    @click="changeFilter('all')"
-                >
+                <router-link tag="button" to="all">  <!-- all = /todos/all -->
                     모든 항목 ({{ total }})
-                </button>
-                 <button 
-                    :class="{ active: filter == 'active'}"
-                    @click="changeFilter('active')"
-                >
+                </router-link>
+                <router-link tag="button" to="active">
                     해야 할 항목 ({{ activeCount }})
-                </button>
-                <button 
-                    :class="{ active: filter == 'completed'}"
-                    @click="changeFilter('completed')"
-                >
+                </router-link>
+                <router-link tag="button" to="completed">
                     완료된 항목 ({{ completedCount }})
-                </button>
+                </router-link>
             </div>
 
             <div class="actions clearfix">
@@ -101,13 +92,12 @@ export default {
     data () {
         return {
             db: null,
-            todos: [],
-            filter: 'all'
+            todos: []
         }
     },
     computed: {
         filteredTodos () {
-            switch (this.filter) {
+            switch (this.$route.params.id) {
                 case 'all':
                 default:
                     return this.todos;
@@ -197,9 +187,6 @@ export default {
             const foundIndex = _findIndex(this.todos, { id: todo.id });
             this.$delete(this.todos, foundIndex);
         },
-        changeFilter (filter) {
-            this.filter = filter;
-        },
         completeAll (checked) {
             // DB 갱신
             const newTodos = this.db
@@ -247,7 +234,7 @@ export default {
         scrollToTop () {
             scrollTo(0, 0, {
                 ease: 'linear',
-                // druation: 1  // default
+                // duration: 1  // default
             });
         },
         scrollToBottom () {
@@ -261,4 +248,9 @@ export default {
 
 <style lang="scss">
     @import "scss/style";
+
+    .filters button.router-link-active {
+        background: royalblue;
+        color: white;
+    }
 </style>
