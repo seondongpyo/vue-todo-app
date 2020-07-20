@@ -22,7 +22,6 @@ const routes = [
         path: '/todos',
         component: TodoApp
     }
-
 ]
 
 export default new VueRouter({
