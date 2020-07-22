@@ -103,15 +103,6 @@ export default {
                     return this.todos.filter(todo => todo.done);
             }
         },
-        total () {
-            return this.todos.length;
-        },
-        activeCount () {
-            return this.todos.filter(todo => !todo.done).length;
-        },
-        completedCount () {
-            return this.total - this.activeCount;
-        },
         allDone: {
             get () {
                 return this.total === this.completedCount && this.total > 0;
