@@ -32,7 +32,7 @@ export default {
     actions: {
         initDB (context) {
             const { state } = context;  // 참조 관계의 객체들 중 state를 사용하겠다고 선언
-            const { commit } = commit;
+            const { commit } = context;
             const adapter = new LocalStorage('todo-app');   // 'todo-app'이라는 이름으로 어댑터를 생성
             
             // state.db = lowdb(adapter); // 할당(실제 값을 변경)하는 로직은 actions에서 불가능 (mutation에서 처리)            
