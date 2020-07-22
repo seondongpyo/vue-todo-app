@@ -89,12 +89,6 @@ export default {
         'todo-creator': TodoCreator,
         'todo-item': TodoItem
     },
-    data () {
-        return {
-            db: null,
-            todos: []
-        }
-    },
     computed: {
         filteredTodos () {
             switch (this.$route.params.id) {
@@ -131,24 +125,6 @@ export default {
         this.initDB();
     },
     methods: {
-        initDB () {
-            const adapter = new LocalStorage('todo-app');   // 'todo-app'이라는 이름으로 어댑터를 생성
-            this.db = lowdb(adapter);
-
-            const hasTodos = this.db.has('todos').value; //lodash
-
-            if (hasTodos) {
-                this.todos = _cloneDeep(this.db.getState().todos);
-
-            } else {
-                // Local DB 초기화
-                this.db
-                    .defaults({ // lodash
-                        todos: []   // Collection
-                    })
-                    .write();
-            }
-        },
         createTodo (title) {
             const newTodo = {
                 id: cryptoRandomString({ length: 10 }),
