@@ -66,10 +66,6 @@
 </template>
 
 <script>
-// 로컬 스토리지
-import _findIndex from 'lodash/findIndex';
-import _forEachRight from 'lodash/forEachRight';
-
 // scroll
 import scrollTo from 'scroll-to';
 
@@ -114,59 +110,6 @@ export default {
         // 전달할 값은 2개 이상이 불가능하므로 객체에 담아서 전달
     },
     methods: {
-        deleteTodo (todo) {
-            this.db
-                .get('todos')
-                .remove({ id: todo.id })
-                .write();
-
-            const foundIndex = _findIndex(this.todos, { id: todo.id });
-            this.$delete(this.todos, foundIndex);
-        },
-        completeAll (checked) {
-            // DB 갱신
-            const newTodos = this.db
-                .get('todos')
-                .forEach(todo => {
-                    todo.done = checked;
-                })
-                .write();
-
-            // Local todos 갱신
-            // this.todos.forEach(todo => {
-            //     todo.done = checked
-            // });
-            this.todos = _cloneDeep(newTodos);
-        },
-        clearCompleted () {
-            // 배열 요소를 앞에서부터 삭제할 경우 에러 발생 가능 (인덱스가 밀림)
-            // this.todos.forEach(todo => {
-            //     if (todo.done) {
-            //         this.deleteTodo(todo);
-            //     }
-            // });
-
-            // vanilla js
-            // this.todos
-            //     .reduce((list, todo, index) => {
-            //         if (todo.done) {
-            //             list.push(index);
-            //         }
-
-            //         return list;
-            //     }, [])
-            //     .reverse()
-            //     .forEach(index => {
-            //         this.deleteTodo(this.todos[index]);
-            //     });
-
-            // lodash
-            _forEachRight(this.todos, todo => {
-                if (todo.done) {
-                    this.deleteTodo(todo);
-                }
-            });
-        },
         scrollToTop () {
             scrollTo(0, 0, {
                 ease: 'linear',
