@@ -31,7 +31,8 @@ export default {
                 return;
             }
 
-            this.$emit('create-todo', this.title);
+            // this.$emit('create-todo', this.title);   // 더 이상 부모로 이벤트를 보내지 않아도 된다
+            this.$store.dispatch('todoApp/createTodo', this.title); // namespace인 todoApp 추가 입력 주의
             this.title = '';
 
             this.$nextTick(() => {

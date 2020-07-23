@@ -50,17 +50,15 @@
 
         <div class="todo-app__list">
             <todo-item
-            v-for="todo in filteredTodos"
-            :key="todo.id"
-            :todo="todo"
-            @update-todo="updateTodo"
-            @delete-todo="deleteTodo"
-        />
+                v-for="todo in filteredTodos"
+                :key="todo.id"
+                :todo="todo"
+            />
         </div>
 
         <todo-creator 
             class="todo-app__creator"
-            @create-todo="createTodo">
+        >
         </todo-creator>
     </div>
 </template>
