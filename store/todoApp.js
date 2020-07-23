@@ -1,3 +1,12 @@
+import lowdb from 'lowdb';
+import LocalStorage from 'lowdb/adapters/LocalStorage';
+import _cloneDeep from 'lodash/cloneDeep';
+import _find from 'lodash/find';
+import _assign from 'lodash/assign';
+
+// id용 임의의 문자열 생성
+import cryptoRandomString from 'crypto-random-string';
+
 export default {
     namespaced: true,   // 모듈이 독립적이거나 재사용이 가능하도록 할 때 명시
     // Data
@@ -30,11 +39,21 @@ export default {
                 .push(newTodo)  // lodash
                 .write();   // lowdb
         },
+        updateDB (state, { todo, value }) {
+            state.db
+                .get('todos')
+                .find({ id: todo.id })
+                .assign(value)
+                .write();
+        },
         assignTodos (state, todos) {
             state.todos = todos;
         },
         pushTodo (state, newTodo) {
             state.todos.push(newTodo);
+        },
+        assignTodo (state, { foundTodo, value }) {
+            _assign(foundTodo, value);
         }
     },
     // Methods
@@ -80,5 +99,14 @@ export default {
             commit('pushTodo', newTodo);
             
         },
+        updateTodo ({ state, commit }, { todo, value }) {
+            // const { todo, value } = payload;
+
+            // Update DB
+            commit('updateDB', { todo, value });
+
+            const foundTodo = _find(state.todos, { id: todo.id });
+            commit('assignTodo', { foundTodo, value });
+        }
     }
 }

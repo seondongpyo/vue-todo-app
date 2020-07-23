@@ -67,19 +67,11 @@
 
 <script>
 // 로컬 스토리지
-import lowdb from 'lowdb';
-import LocalStorage from 'lowdb/adapters/LocalStorage';
-import _cloneDeep from 'lodash/cloneDeep';
-import _find from 'lodash/find';
-import _assign from 'lodash/assign';
 import _findIndex from 'lodash/findIndex';
 import _forEachRight from 'lodash/forEachRight';
 
 // scroll
 import scrollTo from 'scroll-to';
-
-// id용 임의의 문자열 생성
-import cryptoRandomString from 'crypto-random-string';
 
 import TodoCreator from '~/components/TodoCreator';
 import TodoItem from '~/components/TodoItem'
@@ -114,19 +106,14 @@ export default {
     },
     created () {
         this.initDB();
+        // this.$store.dispatch('todoApp/updateTodo', {
+        //     todo: todo,
+        //     value: value
+        // }); 
+        // → store에 있는 actions들 중 하나를 호출할 건데 todoApp 모듈에 있는 updateTodo를 실행하겠다
+        // 전달할 값은 2개 이상이 불가능하므로 객체에 담아서 전달
     },
     methods: {
-        updateTodo (todo, value) {
-            this.db
-                .get('todos')
-                .find({ id: todo.id })
-                .assign(value)
-                .write();
-
-            const foundTodo = _find(this.todos, { id: todo.id });
-            _assign(foundTodo, value);
-
-        },
         deleteTodo (todo) {
             this.db
                 .get('todos')
