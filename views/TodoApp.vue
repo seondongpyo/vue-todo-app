@@ -116,24 +116,6 @@ export default {
         this.initDB();
     },
     methods: {
-        createTodo (title) {
-            const newTodo = {
-                id: cryptoRandomString({ length: 10 }),
-                title: title,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                done: false
-            };
-
-            // DB insert
-            this.db
-                .get('todos')   // lodash
-                .push(newTodo)  // lodash
-                .write();   // lowdb
-
-            // Create Client
-            this.todos.push(newTodo);
-        },
         updateTodo (todo, value) {
             this.db
                 .get('todos')

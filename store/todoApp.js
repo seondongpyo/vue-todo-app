@@ -23,8 +23,18 @@ export default {
         assignDB (state, db) {  // mutation 안에서는 context 안에서 꺼내지 않아도 state로 접근 가능
             state.db = db;
         },
+        createDB (state, newTodo) {
+            // DB insert
+            state.db
+                .get('todos')   // lodash
+                .push(newTodo)  // lodash
+                .write();   // lowdb
+        },
         assignTodos (state, todos) {
             state.todos = todos;
+        },
+        pushTodo (state, newTodo) {
+            state.todos.push(newTodo);
         }
     },
     // Methods
@@ -53,6 +63,22 @@ export default {
                     })
                     .write();
             }
-        }
+        },
+        createTodo ({ state, commit }, title) {
+            const newTodo = {
+                id: cryptoRandomString({ length: 10 }),
+                title: title,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                done: false
+            };
+
+            // DB insert
+            commit('createDB', newTodo);
+
+            // Create Client
+            commit('pushTodo', newTodo);
+            
+        },
     }
 }
