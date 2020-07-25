@@ -65,7 +65,7 @@
 
 <script>
 // scroll
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import scrollTo from 'scroll-to';
 
 import TodoCreator from '~/components/TodoCreator';
@@ -77,6 +77,7 @@ export default {
         'todo-item': TodoItem
     },
     computed: {
+        // Helpers
         ...mapState('todoApp', [    // mapState('namespace', ['가지고 올 state명'])
             'todos'
         ]),
@@ -105,27 +106,25 @@ export default {
             set (checked) {
                 this.completeAll(checked);
             }
-        },
-        // total () {
-        //     return this.$store.getters.todoApp.total;
-        // },
-        // activeCount () {
-        //     return this.$store.getters.todoApp.activeCount;
-        // },
-        // completedCount () {
-        //     return this.$store.getters.todoApp.completedCount;
-        // }
+        }
     },
     created () {
         this.initDB();
-        // this.$store.dispatch('todoApp/updateTodo', {
-        //     todo: todo,
-        //     value: value
-        // }); 
-        // → store에 있는 actions들 중 하나를 호출할 건데 todoApp 모듈에 있는 updateTodo를 실행하겠다
-        // 전달할 값은 2개 이상이 불가능하므로 객체에 담아서 전달
     },
     methods: {
+        // Helpers
+        ...mapMutations('todoApp', [
+            'updateTodo'
+        ]),
+        ...mapActions('todoApp', [
+            'initDB'
+        ]),
+        // updateTodo () {
+        //     this.$store.commit('todoApp/updateTodo');   // commit -> mutation
+        // },
+        // initDB () {
+        //     this.$store.dispatch('todoApp/initDB'); // dispatch -> actions
+        // },
         scrollToTop () {
             scrollTo(0, 0, {
                 ease: 'linear',
