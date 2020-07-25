@@ -13,10 +13,24 @@ export default {
     // Data
     state: () => ({
         db: null,
-        todos: []
+        todos: [],
+        filter: 'all'
     }),
     // Computed
     getters: {
+        filteredTodos (state) {
+            switch (state.filter) {
+                case 'all':
+                default:
+                    return state.todos;
+
+                case 'active':  // 해야 할 항목
+                    return state.todos.filter(todo => !todo.done);
+
+                case 'completed':   // 완료된 항목
+                    return state.todos.filter(todo => todo.done);
+            }
+        },
         total (state) {
             return state.todos.length;
         },
@@ -67,6 +81,9 @@ export default {
         },
         updateTodo (state, { todo, key, value }) {
             todo[key] = value;
+        },
+        updateFilter (state, filter) {
+            state.filter = filter;
         }
     },
     // Methods

@@ -82,23 +82,11 @@ export default {
             'todos'
         ]),
         ...mapGetters('todoApp', [  // mapGetters('namespace', ['가지고 올 getters명'])
+            'filteredTodos',
             'total',
             'activeCount',
             'completedCount'
         ]),
-        filteredTodos () {
-            switch (this.$route.params.id) {
-                case 'all':
-                default:
-                    return this.todos;
-
-                case 'active':  // 해야 할 항목
-                    return this.todos.filter(todo => !todo.done);
-
-                case 'completed':   // 완료된 항목
-                    return this.todos.filter(todo => todo.done);
-            }
-        },
         allDone: {
             get () {
                 return this.total === this.completedCount && this.total > 0;
@@ -108,20 +96,26 @@ export default {
             }
         }
     },
+    watch: {
+        $route () { // route가 변경된 경우 다음 함수를 실행
+            // state.filter = this.$route.params.id;    // 직접적인 데이터 변경 불가능, mutations 도움 필요함
+            // this.$store.commit('todoApp/updateFilter', this.$route.params.id);   // mapMutations로 대체 가능
+            this.updateFilter(this.$route.params.id);
+        }
+    },
     created () {
         this.initDB();
     },
     methods: {
         // Helpers
         ...mapMutations('todoApp', [
-            'updateTodo'
+           'updateFilter' 
         ]),
         ...mapActions('todoApp', [
-            'initDB'
+            'initDB',
+            'completeAll',
+            'clearCompleted'
         ]),
-        ...mapActions([ // index.js에 선언된 actions를 가져올 땐 namespace가 필요 없다
-            'testFunction'
-        ]), 
         scrollToTop () {
             scrollTo(0, 0, {
                 ease: 'linear',
