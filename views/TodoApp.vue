@@ -119,12 +119,9 @@ export default {
         ...mapActions('todoApp', [
             'initDB'
         ]),
-        // updateTodo () {
-        //     this.$store.commit('todoApp/updateTodo');   // commit -> mutation
-        // },
-        // initDB () {
-        //     this.$store.dispatch('todoApp/initDB'); // dispatch -> actions
-        // },
+        ...mapActions([ // index.js에 선언된 actions를 가져올 땐 namespace가 필요 없다
+            'testFunction'
+        ]), 
         scrollToTop () {
             scrollTo(0, 0, {
                 ease: 'linear',
