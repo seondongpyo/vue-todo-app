@@ -7,8 +7,8 @@
             <h2 @click="$router.push('/about')">
                 About
             </h2>
-            <router-link 
-                to="todos" 
+            <router-link
+                to="todos"
                 tag="h2"
             >
                 Todo App

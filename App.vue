@@ -1,7 +1,7 @@
 <template>
     <div>
-        <router-link 
-            to="/" 
+        <router-link
+            to="/"
             class="to-home"
         >
             <i class="material-icons">home</i>
@@ -12,10 +12,10 @@
 
 <script>
 export default {
-    created () {
-        console.log('router', this.$router);
-        console.log('route', this.$route);
-    }
+  created () {
+    console.log('router', this.$router)
+    console.log('route', this.$route)
+  }
 }
 </script>
 
