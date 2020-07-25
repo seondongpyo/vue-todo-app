@@ -79,7 +79,12 @@ export default {
     computed: {
         ...mapState('todoApp', [    // mapState('namespace', ['가지고 올 state명'])
             'todos'
-        ]), 
+        ]),
+        ...mapGetters('todoApp', [  // mapGetters('namespace', ['가지고 올 getters명'])
+            'total',
+            'activeCount',
+            'completedCount'
+        ]),
         filteredTodos () {
             switch (this.$route.params.id) {
                 case 'all':
@@ -93,9 +98,6 @@ export default {
                     return this.todos.filter(todo => todo.done);
             }
         },
-        // todos () {
-        //     return this.$store.state.todoApp.todos;
-        // },
         allDone: {
             get () {
                 return this.total === this.completedCount && this.total > 0;
@@ -104,15 +106,15 @@ export default {
                 this.completeAll(checked);
             }
         },
-        total () {
-            return this.$store.getters.todoApp.total;
-        },
-        activeCount () {
-            return this.$store.getters.todoApp.activeCount;
-        },
-        completedCount () {
-            return this.$store.getters.todoApp.completedCount;
-        }
+        // total () {
+        //     return this.$store.getters.todoApp.total;
+        // },
+        // activeCount () {
+        //     return this.$store.getters.todoApp.activeCount;
+        // },
+        // completedCount () {
+        //     return this.$store.getters.todoApp.completedCount;
+        // }
     },
     created () {
         this.initDB();
