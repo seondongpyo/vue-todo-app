@@ -160,7 +160,7 @@ export default {
         .write()
 
       // state.todos = _cloneDeep(newTodos)
-      commit('assignTodos', _cloneDeep(newTodos));
+      commit('assignTodos', _cloneDeep(newTodos))
     },
     clearCompleted ({ state, dispatch }) {
       _forEachRight(state.todos, todo => {
